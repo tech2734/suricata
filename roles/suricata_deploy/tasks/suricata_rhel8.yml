@@ -40,7 +40,8 @@
     remote_src: true
 
 - name: run the configure command
-  shell: "~/suricata/suricata-{{ current_version }}/configure"
+  shell: "~/suricata/suricata-{{ current_version }}/configure --sysconfigdir=/etc --localstatedir=/var"
+  args:
     creates: "~/suricata/suricata-{{ current_version }}/config.status"
 
 - name: run the make command

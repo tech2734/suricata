@@ -6,6 +6,7 @@
 
 - name: install epel repo
   shell: "rpm -ivh ~/epel-release-latest-7.noarch.rpm"
+  args:
     creates: /etc/yum.repos.d/epel.repo
 
 - name: install suricata
