@@ -41,7 +41,7 @@
 
 - name: run the configure command
   shell: "~/suricata/suricata-{{ current_version }}/configure --sysconfigdir=/etc --localstatedir=/var"
-  creates: "~/suricata/suricata-{{ current_version }}/config.status"
+    creates: "~/suricata/suricata-{{ current_version }}/config.status"
 
 - name: run the make command
   make:
