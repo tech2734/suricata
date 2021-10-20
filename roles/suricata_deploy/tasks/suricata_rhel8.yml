@@ -3,3 +3,33 @@
   rhsm_repository:
     name: codeready-builder-for-rhel-8-x86_64-rpms
     state: enabled
+
+- name: install required packages
+  yum:
+    name:
+      - diffutils
+      - file-devel
+      - gcc
+      - jansson-devel
+      - make
+      - nss-devel
+      - libyaml-devel
+      - libcap-ng-devel
+      - libpcap-devel
+      - pcre-devel
+      - python3
+      - python3-pyyaml
+      - rust-toolset
+      - zlib-devel
+    state: present
+
+- name: download suricata
+  get_url:
+    url: "https://www.openinfosecfoundation.org/download/suricata-{{ current_version }}.tar.gz"
+    dest: "~/suricata/suricata-{{ current_version }}.tar.gz"
+
+- name: untar the suricata archive
+  unarchive:
+    src: "~/suricata/suricata-{{ current_version }}.tar.gz"
+    dest: "~/suricata/suricata-{{ current_version }}"
+    remote_src: true
