@@ -1,8 +1,11 @@
 ---
-- name: install epel repository
-  yum:
-    name: epel-release
-    state: present
+- name: download epel repository package
+  get_url:
+    url: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    dest: "~/"
+
+- name: install epel repo
+  shell: "rpm -ivh ~/epel-release-latest-7.noarch.rpm"
 
 - name: install suricata
   yum:
