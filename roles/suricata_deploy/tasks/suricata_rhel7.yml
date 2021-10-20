@@ -1,0 +1,10 @@
+---
+- name: install epel repository
+  yum:
+    name: epel-release
+    state: present
+
+- name: install suricata
+  yum:
+    name: suricata
+    state: present
