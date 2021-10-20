@@ -1,0 +1,5 @@
+---
+- name: enable the codeready repository
+  rhsm_repository:
+    name: codeready-builder-for-rhel-8-x86_64-rpms
+    state: enabled

@@ -1,2 +1,5 @@
 ---
 # tasks file for suricata_deploy
+- name: include tasks file depending on OS
+  include_tasks: "suricata_rhel{{ ansible_distribution_major_version }}.yml"
+  when: ansible_os_family == 'RedHat'

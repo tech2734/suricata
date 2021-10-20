@@ -1,0 +1,7 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+    - name: import suricata update role
+      import_role:
+        name: suricata_update
