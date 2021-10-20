@@ -39,5 +39,15 @@
     dest: "~/suricata"
     remote_src: true
 
-#- name: run the configure command
-#  shell: "~/suricata/suricata-{{ current_version }}/configure --sysconfigdir=/etc --localstatedir=/var"
+- name: run the configure command
+  shell: "~/suricata/suricata-{{ current_version }}/configure --sysconfigdir=/etc --localstatedir=/var"
+  creates: "~/suricata/suricata-{{ current_version }}/config.status"
+
+- name: run the make command
+  make:
+    chdir: "~/suricata/suricata-{{ current_version }}"
+
+- name: run the make install command
+  make:
+    chdir: "~/suricata/suricata-{{ current_version }}"
+    target: install
