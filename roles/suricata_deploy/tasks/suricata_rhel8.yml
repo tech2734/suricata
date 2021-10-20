@@ -23,6 +23,11 @@
       - zlib-devel
     state: present
 
+- name: create suricata directory
+  file:
+    path: "~/suricata"
+    state: directory
+    
 - name: download suricata
   get_url:
     url: "https://www.openinfosecfoundation.org/download/suricata-{{ current_version }}.tar.gz"
@@ -33,3 +38,6 @@
     src: "~/suricata/suricata-{{ current_version }}.tar.gz"
     dest: "~/suricata/suricata-{{ current_version }}"
     remote_src: true
+
+#- name: run the configure command
+#  shell: "~/suricata/suricata-{{ current_version }}/configure --sysconfigdir=/etc --localstatedir=/var"
