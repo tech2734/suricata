@@ -27,7 +27,7 @@
   file:
     path: "~/suricata"
     state: directory
-    
+
 - name: download suricata
   get_url:
     url: "https://www.openinfosecfoundation.org/download/suricata-{{ current_version }}.tar.gz"
@@ -36,7 +36,7 @@
 - name: untar the suricata archive
   unarchive:
     src: "~/suricata/suricata-{{ current_version }}.tar.gz"
-    dest: "~/suricata/suricata-{{ current_version }}"
+    dest: "~/suricata"
     remote_src: true
 
 #- name: run the configure command
