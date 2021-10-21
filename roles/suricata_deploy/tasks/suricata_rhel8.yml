@@ -46,9 +46,9 @@
 
 - name: run the make command
   make:
-    chdir: "~/suricata/suricata-{{ current_version }}"
+    chdir: "~/suricata/suricata-{{ current_version }}/"
 
 - name: run the make install command
   make:
-    chdir: "~/suricata/suricata-{{ current_version }}"
+    chdir: "~/suricata/suricata-{{ current_version }}/"
     target: install
