@@ -26,4 +26,4 @@
   debug:
     var: rulepush_results
   when:
-    - rulepush_results.changed is true
+    - rulepush_results.changed | bool
