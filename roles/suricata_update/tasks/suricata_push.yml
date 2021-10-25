@@ -14,6 +14,7 @@
     src: "{{ role_path }}/files/suricata.rules"
     dest: "{{ suricata_dir }}/suricata.rules"
     mode: "0644"
+    backup: true
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
   register: rulepush_results
