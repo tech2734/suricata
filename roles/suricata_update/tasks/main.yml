@@ -4,10 +4,13 @@
   include_tasks: suricata_config.yml
   when: suricata_config | bool
 
-- name: run the update
-  shell: suricata-update -c /etc/suricata/update.yaml
-  register: update_results
 
-- name: debug update results
-  debug:
-    var: update_results
+- name: "[INCLUDE TASK] - suricata update"
+  include_tasks: suricata_update.yml
+  when: suricata_update | bool
+
+
+- name: "[INCLUDE TASK] - suricata push"
+  include_tasks: suricata_push.yml
+  when: suricata_push | bool
+

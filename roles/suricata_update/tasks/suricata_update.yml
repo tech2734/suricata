@@ -1,0 +1,8 @@
+---
+- name: run the update
+  shell: suricata-update -c /etc/suricata/update.yaml
+  register: update_results
+
+- name: debug update results
+  debug:
+    var: update_results

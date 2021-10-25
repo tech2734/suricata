@@ -1,0 +1,4 @@
+---
+- name: first task
+  debug:
+    msg: "Hello from suricata push tasks"

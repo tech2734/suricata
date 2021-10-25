@@ -1,3 +1,5 @@
 ---
 # defaults file for suricata_update
 suricata_config: true
+suricata_update: true
+suricata_push: true
