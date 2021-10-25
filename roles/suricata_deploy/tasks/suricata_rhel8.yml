@@ -40,7 +40,7 @@
     remote_src: true
 
 - name: run the configure command
-  shell: "~/suricata/suricata-{{ current_version }}/configure --prefix='/'"
+  shell: "~/suricata/suricata-{{ current_version }}/configure --prefix=/ --bindir=/bin/ --sysconfdir=/etc/ --sbindir=/sbin/ --localstatedir=/var/"
   args:
     creates: "~/suricata/suricata-{{ current_version }}/config.status"
 
