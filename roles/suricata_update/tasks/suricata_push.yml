@@ -18,7 +18,7 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
   register: rulepush_results
-  when: inventory_host != suricata_admin_server
+  when: inventory_hostname != suricata_admin_server
   notify:
     - Reload suricata rules
 
