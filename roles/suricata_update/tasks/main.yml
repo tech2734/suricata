@@ -2,7 +2,7 @@
 # tasks file for suricata_update
 - name: "[INCLUDE TASK] - suricata config"
   include_tasks: suricata_config.yml
-  when: suricata_config | bool | default('false')
+  when: suricata_config | bool
 
 - name: run the update
   shell: suricata-update -c /etc/suricata/update.yaml
