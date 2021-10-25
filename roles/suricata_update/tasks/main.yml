@@ -9,4 +9,4 @@
     group: suricata
 
 - name: run the update
-  shell: suricata-update -c /etc/suricata/update.yml
+  shell: suricata-update -c /etc/suricata/update.yaml
