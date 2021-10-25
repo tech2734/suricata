@@ -2,7 +2,9 @@
 - name: run the update
   shell: suricata-update -c /etc/suricata/update.yaml
   register: update_results
+  delagate_to: "{{ suricata_admin_server }}"
 
 - name: debug update results
   debug:
     var: update_results
+  delagate_to: "{{ suricata_admin_server }}"

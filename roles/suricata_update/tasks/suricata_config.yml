@@ -6,3 +6,4 @@
     mode: "0640"
     owner: suricata
     group: suricata
+  delagate_to: "{{ suricata_admin_server }}"
