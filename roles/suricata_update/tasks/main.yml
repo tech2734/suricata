@@ -1,12 +1,13 @@
 ---
 # tasks file for suricata_update
-- name: first configure update
-  copy:
-    src: update.yaml
-    dest: /etc/suricata/update.yaml
-    mode: "0640"
-    owner: suricata
-    group: suricata
+- name: "[INCLUDE TASK] - suricata config"
+  include_tasks: suricata_config.yml
+  when: suricata_config | bool | default('false')
 
 - name: run the update
   shell: suricata-update -c /etc/suricata/update.yaml
+  register: update_results
+
+- name: debug update results
+  debug:
+    var: update_results

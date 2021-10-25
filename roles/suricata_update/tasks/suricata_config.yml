@@ -1,0 +1,8 @@
+---
+- name: first configure update
+  copy:
+    src: update.yaml
+    dest: /etc/suricata/update.yaml
+    mode: "0640"
+    owner: suricata
+    group: suricata
