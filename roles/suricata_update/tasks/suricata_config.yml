@@ -7,3 +7,4 @@
     owner: suricata
     group: suricata
   delegate_to: "{{ suricata_admin_server }}"
+  run_once: true

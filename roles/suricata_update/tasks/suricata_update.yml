@@ -3,8 +3,10 @@
   shell: suricata-update -c /etc/suricata/update.yaml
   register: update_results
   delegate_to: "{{ suricata_admin_server }}"
+  run_once: true
 
 - name: debug update results
   debug:
     var: update_results
   delegate_to: "{{ suricata_admin_server }}"
+  run_once: true
