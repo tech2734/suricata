@@ -4,8 +4,3 @@
   shell: kill -USR2 $(pidof suricata)
   args:
     executable: /bin/bash
-  register: reload_result
-
-- name: debug output
-  debug:
-    var: reload_result
