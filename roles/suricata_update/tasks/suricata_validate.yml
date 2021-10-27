@@ -6,3 +6,8 @@
 - name: debug service facts
   debug:
     var: services_result.ansible_facts.services
+
+- name: fail if the service is not running
+  fail:
+    msg: "The Suricata service is not running.  There may be an issue with updated rules file"
+  when: services_result.ansible_facts.services.suricata.service.state == "stopped"

@@ -9,8 +9,27 @@
   delegate_to: "{{ suricata_admin_server }}"
   run_once: true
 
+- name: check for line in file
+  shell: 'grep "\-\-init\-errors\-fatal" {{ suricata_service_file }}'
+  register: shell_result
+  ignore_errors: true
+  failed_when: false
+
+- name: replace line in file
+  lineinfile:
+    dest: /root/testfile
+    state: present
+    regexp: '^(ExecStart=.* (?!{{ init_fail }}))'
+    backrefs: true
+    backup: true
+    line: '\1{{ init_fail }}'
+  vars:
+    init_fail: "--init-errors-fatal"
+  when: shell_result.rc == 1
+
 - name: ensure that the service is running
   systemd:
     name: suricata
-    state: started
+    state: restarted
     enabled: true
+    daemon-reload: true

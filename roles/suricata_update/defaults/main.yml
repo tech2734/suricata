@@ -4,3 +4,4 @@ suricata_config: true
 suricata_update: true
 suricata_push: true
 suricata_validate: true
+suricata_service_file: /usr/lib/systemd/system/suricata.service
