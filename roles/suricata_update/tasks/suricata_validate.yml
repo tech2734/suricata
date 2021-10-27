@@ -1,1 +1,8 @@
 ---
+- name: get service facts
+  service_facts:
+  register: services_result
+
+- name: debug service facts
+  debug:
+    var: services_result

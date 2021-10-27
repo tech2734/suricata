@@ -14,3 +14,7 @@
   include_tasks: suricata_push.yml
   when: suricata_push | bool
 
+- name: "[INCLUDE TASK] - suricata validate"
+  include_tasks: suricata_validate.yml
+  when: suricata_validate | bool
+
