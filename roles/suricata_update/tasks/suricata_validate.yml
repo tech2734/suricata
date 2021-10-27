@@ -9,9 +9,13 @@
 
 - name: set fact
   set_fact:
-    service_state: "{{ services_result.ansible_facts.services.['suricata.service'].state }}"
+    service_state: "{{ services_result.ansible_facts.services }}"
+
+- name: set fact 2
+  set_fact:
+    suricata_state: "{{ service_state['suricata.service'] }}"
 
 - name: fail if the service is not running
   fail:
     msg: "The Suricata service is not running.  There may be an issue with updated rules file"
-  when: service_state == "stopped"
+  when: suricata_state.state == "stopped"
