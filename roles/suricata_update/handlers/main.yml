@@ -1,5 +1,11 @@
 ---
 # handlers file for suricata_update
+- name: first ensure that the service is running
+  systemd:
+    name: suricata
+    state: started
+    enabled: true
+    
 - name: Reload suricata rules
   shell: kill -USR2 $(pidof suricata)
   args:
