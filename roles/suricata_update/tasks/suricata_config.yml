@@ -1,5 +1,5 @@
 ---
-- name: first configure update
+- name: first configure update yaml file i.e. /etc/suricata/update.yaml
   copy:
     src: update.yaml
     dest: /etc/suricata/update.yaml
@@ -9,13 +9,13 @@
   delegate_to: "{{ suricata_admin_server }}"
   run_once: true
 
-- name: check for line in file
+- name: check for line in systemd service file
   shell: 'grep "\-\-init\-errors\-fatal" {{ suricata_service_file }}'
   register: shell_result
   ignore_errors: true
   failed_when: false
 
-- name: replace line in file
+- name: replace line in systemd service file
   lineinfile:
     dest: /root/testfile
     state: present
@@ -27,7 +27,7 @@
     init_fail: "--init-errors-fatal"
   when: shell_result.rc == 1
 
-- name: ensure that the service is running
+- name: ensure that the suricata service is running
   systemd:
     name: suricata
     state: restarted
