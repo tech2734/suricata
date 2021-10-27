@@ -5,4 +5,4 @@
 
 - name: debug service facts
   debug:
-    var: services_result.ansible_facts
+    var: services_result.ansible_facts.services
