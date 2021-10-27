@@ -5,4 +5,4 @@
 
 - name: debug service facts
   debug:
-    var: services_result
+    var: services_result.services
