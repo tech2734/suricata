@@ -1,7 +1,12 @@
 ---
 # handlers file for suricata_update
 
-- name: Reload suricata rules
+- name: Reload Suricata rules
   shell: kill -USR2 $(pidof suricata)
   args:
     executable: /bin/bash
+
+- name: Restart Suricata
+  systemd:
+    name: suricata
+    state: restarted

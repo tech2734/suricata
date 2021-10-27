@@ -21,10 +21,13 @@
   register: rulepush_results
   when: inventory_hostname != suricata_admin_server
   notify:
-    - Reload suricata rules
+    - Restart Suricata
 
 - name: debug the results
   debug:
     var: rulepush_results
   when:
     - rulepush_results is defined and rulepush_results.changed | bool
+
+- name: Force handlers
+  meta: flush_handlers
