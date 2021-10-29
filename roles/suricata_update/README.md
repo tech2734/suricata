@@ -1,38 +1,73 @@
-Role Name
-=========
+# suricata_deploy
+## **Deploy Suricata**
 
-A brief description of the role goes here.
+**Role Description**
 
-Requirements
-------------
+This role will update suricata, optionally configure suricata, and push the updated rules out to IDS servers.  It has been setup modularly so different tasks can be shut on and off for development and troubleshooting.
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+**Dependencies**
 
-Role Variables
---------------
+Suricata installed on the Admin server.  Suricata installed on the clients
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+**Required Variables**
 
-Dependencies
-------------
+This role determines which tasks to run based on the ansible_distribution_major_version and ansible_os_family variables.  For this reason gather_facts is set to true on the calling playbook.
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+```yaml
+---
+suricata_config: false                        #Run the Suricata config tasks file
+suricata_update: true                         #Run the Suricata update tasks file
+suricata_push: true                           #Run the Suricata push tasks file
+suricata_validate: true                       #Run the Suricata validate tasks file
+suricata_admin_server: servername.example.com #Admin server that runs the update
+suricata_dir: /var/lib/suricata/rules         #Directory where rules are stored
 
-Example Playbook
-----------------
+```
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+**Example Playbook Usage**
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```yaml
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+    - name: import suricata_update role
+      import_role:
+        name: suricata_update
+```
 
-License
--------
+**Ansible Tower Template Settings**
 
-BSD
+Limit should have "Prompt on Launch" set for the template.  Include the host name to install to when prompted.
 
-Author Information
-------------------
+If not specified in defaults/main.yml you would include the required variables in the extra_variables section of the template.  Also if toggling certain tasks files are desired they could be specified in extra_vars as well.
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+**EXTRA VARIABLES**
+
+```yaml
+---
+suricata_update: false
+
+```
+
+**FILES**
+
+If suricata_config tasks is desired, place the systemd suricata.service file and the /etc/suricata/update.yaml file in the files directory
+
+**HANDLERS**
+
+There are two handlers, "Reload Suricata Rules" and "Restart Suricata".  Currently the code calls "Restart Suricata" handler as the intent is to fail the service if there are syntax errors in the rules file.
+
+**TASKS**
+
+```yaml
+main.yml               #The main tasks that includes the other tasks on conditionals
+suricata_config.yml    #Copy over the config files to admin_server (update.yaml) and to
+                       #the clients (systemd service file to include the
+                       # --init-errors-fatal option)
+suricata_push.yml      #Fetch rules from Admin server and push to the clients
+suricata_update.yml    #Run update script on Admin server
+suricata_validate.yml  #Validate that the Suricata service started back up and fail the
+                       #job if it is not running
+              
+```

@@ -1,38 +1,57 @@
-Role Name
-=========
+# suricata_deploy
+## **Deploy Suricata**
 
-A brief description of the role goes here.
+**Role Description**
 
-Requirements
-------------
+This role will install Suricata to both RHEL 7 and RHEL 8 servers.  RHEL 7 installs with yum as a package is available, however RHEL 8 pulls the software down and compiles it as that is the only method at the time this role was written.
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+**Dependencies**
 
-Role Variables
---------------
+For RHEL 8 compile, there are some dependencies required, the role itself will download and install the required dependencies:
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+```yaml
+---
+  - name: install required packages
+    yum:
+      - diffutils
+      - file-devel
+      - gcc
+      - jansson-devel
+      - make
+      - nss-devel
+      - libyaml-devel
+      - libcap-ng-devel
+      - libpcap-devel
+      - pcre-devel
+      - python3
+      - python3-pyyaml
+      - rust-toolset
+      - zlib-devel
 
-Dependencies
-------------
+```
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+**Required Variables**
 
-Example Playbook
-----------------
+This role determines which tasks to run based on the ansible_distribution_major_version and ansible_os_family variables.  For this reason gather_facts is set to true on the calling playbook.
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```yaml
+---
+current_version: 6.0.3                      #The version of Suricata install
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```
 
-License
--------
+**Example Playbook Usage**
 
-BSD
+```yaml
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+    - name: import suricata_deploy role
+      import_role:
+        name: suricata_deploy
+```
 
-Author Information
-------------------
+**Ansible Tower Template Settings**
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Limit should have "Prompt on Launch" set for the template.  Include the host name to install to when prompted.
